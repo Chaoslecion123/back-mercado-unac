@@ -17,13 +17,13 @@ class Address(MercadoUtil):
         blank=True
     )
 
-    country = models.ForeignKey(
-        "world.Country",
-        on_delete=models.CASCADE,
-        related_name='+',
-        blank=True,
-        null=True
-    )
+    # country = models.ForeignKey(
+    #     "world.Country",
+    #     on_delete=models.CASCADE,
+    #     related_name='+',
+    #     blank=True,
+    #     null=True
+    # )
 
     country_area = models.ForeignKey(
         "world.CountryArea",

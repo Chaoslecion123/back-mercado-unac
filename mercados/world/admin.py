@@ -5,12 +5,12 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # Models
-from mercados.world.models import Country,CountryArea,City,CityArea
+from mercados.world.models import CountryArea,City,CityArea
 
 
-@admin.register(Country)
-class CountryAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(Country)
+# class CountryAdmin(admin.ModelAdmin):
+#     pass
 
 @admin.register(CountryArea)
 class CountryAreaAdmin(admin.ModelAdmin):

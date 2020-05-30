@@ -3,32 +3,32 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext_lazy
 from mercados.utils.models import MercadoUtil
 
-class Country(MercadoUtil):
-    """Country model."""
-    name = models.CharField(max_length=256)
+# class Country(MercadoUtil):
+#     """Country model."""
+#     name = models.CharField(max_length=256)
 
-    class Meta:
-        verbose_name = pgettext_lazy(
-            'Country model name',
-            'país'
-        )
-        verbose_name_plural = pgettext_lazy(
-            'Country model name',
-            'paises'
-        )
+#     class Meta:
+#         verbose_name = pgettext_lazy(
+#             'Country model name',
+#             'país'
+#         )
+#         verbose_name_plural = pgettext_lazy(
+#             'Country model name',
+#             'paises'
+#         )
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 class CountryArea(MercadoUtil):
     """Country area model.
     In the peruvian political division this will represent `Departamentos`."""
-    country = models.ForeignKey(
-        Country,
-        related_name='country_areas',
-        related_query_name='country_area',
-        on_delete=models.CASCADE)
+    # country = models.ForeignKey(
+    #     Country,
+    #     related_name='country_areas',
+    #     related_query_name='country_area',
+    #     on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
 
     class Meta:
