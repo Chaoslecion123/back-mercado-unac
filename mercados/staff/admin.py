@@ -11,3 +11,4 @@ from mercados.staff.models import Staff
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
     pass
+    #algo va pasar aqui
