@@ -10,5 +10,6 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path('', include(('mercados.users.urls', 'users'), namespace='users')),
     path('', include(('mercados.markets.urls', 'markets'), namespace='markets')),
+    path('', include(('mercados.world.urls', 'world'))),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

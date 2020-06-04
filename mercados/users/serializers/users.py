@@ -1,4 +1,3 @@
-from rest_framework import serializers
 from mercados.users.models import User
 
 # Django
