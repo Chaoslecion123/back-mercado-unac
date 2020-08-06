@@ -13,6 +13,7 @@ class MarketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Market
         fields = (
+            'id',
             'name',
             'direccion',
             'aforo',

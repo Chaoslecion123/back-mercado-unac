@@ -4,12 +4,14 @@
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import permissions
 
 # Model
 from mercados.users.models import User
 
 # Serializer
-from mercados.users.serializers import UserModelSerializer,UserLoginSerializer,UserSignUpSerializer
+from mercados.users.serializers import UserModelSerializer,UserLoginSerializer,UserSignUpSerializer,TokenObtainPairSerializer
 
 class UserViewSet(mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
@@ -17,6 +19,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
+    permission_classes = (permissions.AllowAny,)
 
 
     @action(detail=False, methods=['post'])
@@ -40,3 +43,8 @@ class UserViewSet(mixins.RetrieveModelMixin,
         user = serializer.save()
         data = UserModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
+
+
+class ObtainTokenPairWithUser(TokenObtainPairView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = TokenObtainPairSerializer

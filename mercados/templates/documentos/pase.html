@@ -1,0 +1,336 @@
+{% extends "easy_pdf/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block layout_style %}
+   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <style type="text/css">
+        @page {
+            size: {{ pagesize|default:"A4" }};
+            margin-left: 1.2cm;
+            margin-right: 1cm;
+            margin-top: 5.0cm;
+            margin-bottom: 2.5cm;
+            @frame header {
+                -pdf-frame-content: page-header;
+                margin-top: 1.5cm;
+                margin-right: 0.5mm;
+                margin-bottom: 1cm;
+                margin-left: 0.5mm;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block extra_style %}
+
+    <style type="text/css">
+        @font-face { font-family: "gothicb"; src: url("{% static 'fonts/gothicb.ttf' %}"); }
+        @font-face { font-family: "century"; src: url("{% static 'fonts/century.ttf' %}"); }
+
+        .page_title h1{
+            font-family:"gothicb";
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .header h3{
+            font-family:"gothicb";
+            font-size: 18px;
+            padding-top: -10px;
+            padding-bottom: -10px;
+            color: #0f0f0f;
+            /*text-align: center;*/
+        }
+
+        .header h5{
+            font-size: 10px;
+            padding: -10px;
+            /*text-align: center;*/
+        }
+
+        .header_documento th{
+            padding-top: 5px;
+            padding-bottom: 2px;
+            font-size: 14px;
+            color: #0f0f0f;
+            background-color: beige;
+        }
+
+        .header_documento td{
+            font-size: 14px;
+        }
+
+        html{
+            font-family:"century";
+            font-size: 10px;
+        }
+
+        .item{
+            color: #0f0f0f;
+            font-style: italic;
+        }
+
+
+        .text-center{
+            text-align: center;
+        }
+
+        .text-left{
+            text-align: left;
+        }
+
+        /*p {*/
+            /*margin: 0 0 6px 0;*/
+            /*font-size: 11pt;*/
+        /*}*/
+        table {
+            line-height: 140%;
+            width: 100%;
+        }
+        table.bordered {
+            border: 0.1pt solid #0f0f0f;
+            /*border-bottom: 0.1pt solid #999999;*/
+        }
+        /*tr, td, th { border: none; }*/
+        th {
+            /*border-bottom: 0.1pt solid #999999;*/
+            margin: 10px;
+            padding-top: 2.5px;
+            font-family:"gothicb";
+        }
+        td {
+            vertical-align: middle;
+            margin: 10px;
+            padding-top: 2.5px;
+            text-align: center;
+
+        }
+        td:last-child { padding-bottom: 0; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .bottom-10 { margin-bottom: 10px; }
+        .bottom-20 { margin-bottom: 20px; }
+        .header { color: #7f7f7f; }
+        .header p { font-size: 13px; line-height: 1.5em; }
+        .header-link { font-weight: bold; text-decoration: none; color: #4F81BD; font-size: 14px; }
+        .logo { margin-bottom: 20px; margin-left: -25px; }
+        .logo img { zoom: 60%; }
+        .recipient { margin-left: 7cm; }
+        .main h1 {
+            margin: 18px 0 18px 0;
+            font-size: 250%;
+            font-weight: normal;
+            color: #4F81BD;
+        }
+        .main h2 {
+            margin: 18px 0 6px 0;
+            font-size: 180%;
+            font-weight: normal;
+        }
+        .info { border: 1px solid #4F81BD; padding: 10px; margin-top: 50px; margin-bottom: 50px; }
+        .info a { color: #4F81BD; text-decoration: none; }
+    </style>
+{% endblock %}
+
+{% block page_header%}
+    <div id="page-header">
+        <div class="header">
+            <table>
+                <tr>
+                    <td style="width: 25%">
+
+                         <figure class="text-left">
+                                <img src="{{ documento.emisor.logotipo.url }}" width="180px" height="80px"/>
+                         </figure>
+
+
+                    </td>
+                    <td style="width: 40%">
+
+                        <h3 class="text-left">{{ documento.emisor }}</h3>
+                        <h5 class="text-left">{{ documento.emisor.direccion }}<br> {{ documento.emisor.ubigeo }}</h5>
+                        <h5 class="text-left">T. {{ documento.emisor.telefono|default:"" }}</h5>
+                        <h5 class="text-left">{{ documento.emisor.correo|default:"" }}</h5>
+
+                    </td>
+                    <td style="width: 30%; border: 2pt solid #0f0f0f">
+                        <table class="header_documento">
+                            <tr>
+                                <td>R.U.C N° {{ documento.emisor.no_documento }}</td>
+                            </tr>
+                            <tr>
+                                <th>FACTURA ELECTRÓNICA</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ documento.cnumerodocumento }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="content">
+
+      <section>
+          <table>
+              <tr>
+                  <th style="width: 15%">Cliente:</th>
+                  <td style="width:55%; border-bottom: 1px solid #0f0f0f" class="text-left">{{ documento.cliente }}</td>
+                  <th style="width: 15%">Fecha Emisión:</th>
+                  <td style="width: 15%; border-bottom: 1px solid #0f0f0f">{{ documento.cfechaemision|date:"d/m/Y" }}</td>
+              </tr>
+              <tr>
+                  <th style="width: 15%">R.U.C.:</th>
+                  <td style="width:55%; border-bottom: 1px solid #0f0f0f"  class="text-left">{{ documento.cliente.no_documento }}</td>
+                  <th style="width: 15%">Fecha Vcto:</th>
+                  <td style="width: 15%; border-bottom: 1px solid #0f0f0f">{{ documento.cfechavcto|date:"d/m/Y" }}</td>
+              </tr>
+              <tr>
+                  <th style="width: 15%">Dirección:</th>
+                  <td style="width:55%; border-bottom: 1px solid #0f0f0f"  class="text-left">{{ documento.cliente.direccion|default:"" }}-{{ documento.cliente.ubigeo|default:"" }} </td>
+                  <th style="width: 15%">Moneda:</th>
+                  <td style="width: 15%; border-bottom: 1px solid #0f0f0f">{{ documento.get_nombre_moneda }}</td>
+              </tr>
+          </table>
+      </section>
+
+      <section>
+          <div  style="border-bottom: 0.1pt solid beige">
+
+              <table style="margin-top: 40px">
+                  <thead>
+                        <tr>
+                            <th style="background-color: beige">Cant</th>
+                            <th style="background-color: beige">Descripción</th>
+                            <th style="background-color: beige">Unidad</th>
+                            <th style="background-color: beige">Val. Unit.</th>
+                            <th style="background-color: beige">Dcto</th>
+                            <th style="background-color: beige">Total</th>
+                        </tr>
+                  </thead>
+                  <tbody>
+                        {% for item in documento.invoice_item.all %}
+                        <tr>
+                            <td style="width: 100px">{{ item.vccantidaditem|stringformat:".0f"|intcomma|default:"" }}</td>
+                            <td class="text-left">{{ item.descripcion }}</td>
+                            <td style="width: 150px" class="text-center">ZZ</td>
+                            <td style="width: 150px" class="text-right">{{ item.vcvalorventaunitariosigv|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            <td style="width: 150px" class="text-right">{{ item.vcmontodescuentoitem|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            <td style="width: 150px" class="text-right">{{ item.vcvalorventaitemsigv|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                        </tr>
+                        {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </section>
+        <section>
+            <table style="margin-top: 20px">
+                <tr>
+                    <td style="width: 60%">
+                        <table>
+                            <tr>
+                                <th style="text-align: left">Total Unidades: {{ documento.invoice_item.all|length }}</th>
+                            </tr>
+
+                            <tr>
+                                <th style="text-align: left">SON: {{ documento.vcmontoletra }}</th>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><img height="220px" src="{{ documento.qr_code.url }}"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Representación impresa del comprobante de venta electrónico</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">para consultar el documento ingrese a :</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align: left"><a href="http://documentoelectronico.pe">http://documentoelectronico.pe</a></th>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 40%">
+                        <table style="border: 0.1pt solid beige">
+                            <tr>
+                                <td style="width: 50%; background-color: beige">Total Descuentos</td>
+                                <td style="width: 50%" class="text-right">{{ documento.vcmontodescuento|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; background-color: beige">Operación Gravada</td>
+                                <td style="width: 50%" class="text-right">{{ documento.vcmontogravado|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; background-color: beige">Operación Inafecta</td>
+                                <td style="width: 50%" class="text-right">{{ documento.vcmontoinafecto|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; background-color: beige">Operación Exonerada</td>
+                                <td style="width: 50%" class="text-right">{{ documento.vcmontoexonerado|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; background-color: beige">Operación Gratuita</td>
+                                <td style="width: 50%" class="text-right">{{ documento.vcmontogratuito|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; background-color: beige">I.G.V.</td>
+                                <td style="width: 50%" class="text-right">{{ documento.vcmontoigv|stringformat:".2f"|intcomma|default:"0.00" }}</td>
+                            </tr>
+                            <tr>
+                                <th style="width: 50%; background-color: beige">Importe Total</th>
+                                <th style="width: 50%; text-align: right" class="text-right">{{ documento.vcimportetotal|stringformat:".2f"|intcomma|default:"0.00" }}</th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+{% endblock %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        height: 80vh;
+        align-items: center;
+    }
+    .elemento {
+        width: 21%;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="elemento">
+            va algo
+        </div>
+        <div class="elemento">
+            va algo
+        </div>
+        <div class="elemento">
+            va algo
+        </div>
+        <div class="elemento">
+            va algo
+        </div>
+        <div class="elemento">
+            va algo
+        </div>
+    </div>
+</body>
+</html> -->

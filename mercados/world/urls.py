@@ -9,6 +9,6 @@ from .views import world as world_views
 
 urlpatterns = [
     path('departamentos/', world_views.ObtenerDepartamentos.as_view()),
-    path('ciudades/<int:id_departamento>/', world_views.ObtenerCiudades.as_view()),
-    path('distritos/<int:id_departamento>/<int:id_ciudad>/', world_views.ObtenerDistritos.as_view())
+    path('ciudades/', world_views.ObtenerCiudades.as_view()),
+    path('distritos/', world_views.ObtenerDistritos.as_view())
 ]

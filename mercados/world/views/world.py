@@ -18,13 +18,11 @@ class ObtenerDepartamentos(APIView):
 
 
 class ObtenerCiudades(APIView):
-    def get(self,request,id_departamento):
-        ciudades = City.objects.filter(country_area__id=id_departamento)
+    def get(self,request):
+        ciudades = City.objects.all()
         return Response(CitySerializer(ciudades,many=True).data)
 
 class ObtenerDistritos(APIView):
-    def get(self,request,id_departamento,id_ciudad):
-        distritos = CityArea.objects.filter(
-            Q(city__id=id_ciudad) & Q(city__country_area__id=id_departamento)
-        )
+    def get(self,request):
+        distritos = CityArea.objects.all()
         return Response(CityAreaSerializer(distritos,many=True).data)

@@ -7,6 +7,10 @@ psycopg2==2.7.4 --no-binary psycopg2
 # Django
 django==2.0.9
 djangorestframework
+django-filter
+django-cors-headers
+djangorestframework-simplejwt
+django-easy-pdf
 
 # Environment
 django-environ==0.4.5
