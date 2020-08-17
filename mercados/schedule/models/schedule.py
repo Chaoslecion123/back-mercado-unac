@@ -6,6 +6,12 @@ from mercados.utils.models import MercadoUtil
 class Schedule(MercadoUtil):
     time_start = models.TimeField()
     time_end = models.TimeField()
+    markets = models.ForeignKey(
+        "markets.Market", 
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = pgettext_lazy(
@@ -17,5 +23,6 @@ class Schedule(MercadoUtil):
             'horarios'
         )
 
+
     def __str__(self):
-        return f'comienza {self.time_start} y termina {self.time_end}'
+        return f'{self.markets.name} comienza {self.time_start} y termina {self.time_end}'

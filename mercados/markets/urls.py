@@ -11,7 +11,9 @@ from .views import markets as markets_views
 
 router = DefaultRouter()
 router.register(r'markets', markets_views.MarketViewSet, basename='markets')
+router.register(r'countermarket', markets_views.CounterMarketViewSet, basename='counter-market')
+router.register(r'pass_mercado', markets_views.MarketPassRequestViewSet, basename='market-pass-request')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]

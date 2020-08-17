@@ -9,13 +9,6 @@ from django.core.validators import RegexValidator
 from mercados.utils.models import MercadoUtil
 
 class User(MercadoUtil,AbstractUser):
-    email = models.EmailField(
-        'email address',
-        unique=True,
-        error_messages={
-            'unique': 'A user with that email already exists.'
-        }
-    )
 
     dni = models.CharField(
         'documento de identidad',
@@ -36,6 +29,9 @@ class User(MercadoUtil,AbstractUser):
         default=True,
         help_text='help esasy to distinguish users and perfom querys'
     )
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
 
     def __str__(self):
         """Return username."""

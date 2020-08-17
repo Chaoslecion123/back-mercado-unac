@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 # MODELO
-from mercados.markets.models import Market
+from mercados.markets.models import Market,MarketPassRequest,CounterMarket
 
 class MarketSerializer(serializers.ModelSerializer):
     distrito = serializers.SerializerMethodField()
@@ -16,12 +16,13 @@ class MarketSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'direccion',
-            'aforo',
             'distrito',
             'ciudad',
-            'departamento'
+            'departamento',
+            'aforo'
         )
 
+    
     def get_direccion(self,obj):
         if obj.address:
             return f"{obj.address.line_1} - {obj.address.line_2}" 
@@ -38,5 +39,33 @@ class MarketSerializer(serializers.ModelSerializer):
         if obj.address.country_area:
             return obj.address.country_area.name
 
-    
 
+
+
+class CounterMarketSerializer(serializers.ModelSerializer):
+    name_schedule = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CounterMarket
+        fields = (
+            'id',
+            'markets',
+            'count_aforo',
+            'schedule',
+            'name_schedule',
+        )
+
+    def get_name_schedule(self,obj):
+        return f'inicia {obj.schedule.time_start} y termina {obj.schedule.time_end}'
+
+
+class MarketPassRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MarketPassRequest
+        fields = (
+            'id',
+            'counter_market',
+            'count',
+            'archivopdf',
+            'client'
+        )

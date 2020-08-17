@@ -21,7 +21,6 @@ class UserModelSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
-            'email',
             'dni',
         )
 
@@ -53,9 +52,9 @@ class UserSignUpSerializer(serializers.Serializer):
     Handle sign up data validation and user/profile creation.
     """
 
-    email = serializers.EmailField(
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
+    # email = serializers.EmailField(
+    #     validators=[UniqueValidator(queryset=User.objects.all())]
+    # )
     username = serializers.CharField(
         min_length=4,
         max_length=20,
@@ -100,9 +99,15 @@ class TokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super(TokenObtainPairSerializer, cls).get_token(user)
 
+        if  user.users_client.first():
+            pass_request =  user.users_client.first().id
+        else:
+            pass_request = None
+
         # Add custom claims
         token['first_name'] = user.first_name
         token['last_name'] = user.last_name
         token['email'] = user.email
         token['username'] = user.username
+        token['pass_request_id'] = pass_request
         return token
