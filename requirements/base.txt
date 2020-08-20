@@ -18,6 +18,7 @@ django-environ==0.4.5
 
 # Passwords security
 argon2-cffi==18.3.0
+setuptools
 
 # Static files
 whitenoise==4.1.2
