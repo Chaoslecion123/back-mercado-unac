@@ -4,6 +4,9 @@
 
 gunicorn==19.9.0
 
+argon2-cffi==18.3.0
+setuptools
+
 # Static files
 django-storages[boto3]==1.7.1
 
