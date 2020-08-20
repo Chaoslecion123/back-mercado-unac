@@ -17,8 +17,7 @@ django-easy-pdf
 django-environ==0.4.5
 
 # Passwords security
-{% comment %} argon2-cffi==18.3.0
-setuptools {% endcomment %}
+
 
 # Static files
 whitenoise==4.1.2
