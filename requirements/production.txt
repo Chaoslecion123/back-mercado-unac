@@ -2,8 +2,6 @@
 
 -r ./base.txt
 
-argon2_cffi
-
 gunicorn==19.9.0
 
 # Static files
