@@ -206,4 +206,4 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
-API_URL = 'http://localhost:8000'
+API_URL = 'https://api-casazola.tk'
