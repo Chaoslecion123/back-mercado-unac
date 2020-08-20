@@ -17,6 +17,7 @@ django-easy-pdf
 django-environ==0.4.5
 
 # Passwords security
+bcrypt
 argon2-cffi==18.3.0
 
 # Static files

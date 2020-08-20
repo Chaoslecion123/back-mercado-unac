@@ -161,7 +161,7 @@ ADMIN_URL = 'admin/'
 ADMINS = [
     ("""Fernando""", 'chaoslecion71@gmail.com'),
 ]
-MANAGERS = ADMINS
+#MANAGERS = ADMINS
 
 # Celery
 INSTALLED_APPS += ['mercados.taskapp.celery.CeleryAppConfig']
