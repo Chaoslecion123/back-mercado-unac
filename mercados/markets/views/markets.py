@@ -200,7 +200,7 @@ class MarketPassRequestViewSet(viewsets.ModelViewSet):
             if hora_actual >= hora_inicial_ultimo_pase_generado and hora_actual <= hora_final_ultimo_pase_generado :
                 data = {
                     'ok':False,
-                    'message':'El tiempo de tu pase todavia no caduca.'
+                    'message':'El tiempo de tu pase todavia no caduca2.'
                 }
                 return Response(data, status=status.HTTP_200_OK)
   
@@ -244,7 +244,7 @@ class MarketPassRequestViewSet(viewsets.ModelViewSet):
                 else:
                     data = {
                         'ok':False,
-                        'message':'El tiempo de tu pase todavia no caduca.'
+                        'message':'El tiempo de tu pase todavia no caducaaa.'
                     }
                     return Response(data, status=status.HTTP_200_OK)
         else:
