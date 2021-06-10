@@ -6,7 +6,7 @@ requests
 psycopg2==2.7.4 --no-binary psycopg2
 
 # Django
-django==2.0.9
+django==2.2.24
 djangorestframework
 django-filter
 django-cors-headers
